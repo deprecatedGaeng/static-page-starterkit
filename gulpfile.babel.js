@@ -4,29 +4,23 @@ import del from 'del' ;
 import minify from 'gulp-uglify';
 import sass from 'gulp-sass';
 import Cache from 'gulp-file-cache';
-import connect from 'gulp-connect';
 import babel from 'gulp-babel';
 import concat from 'gulp-concat';
-import strip from 'gulp-strip-debug';
-import minifyHTML from 'gulp-minify-html';
 import browserSync from 'browser-sync';
+import ejs from 'gulp-ejs';
+import rename from 'gulp-rename';
+import plumber from 'gulp-plumber';
+import notify from 'gulp-notify';
 import 'babel-polyfill'
 
 const cache = new Cache();
 const reload = browserSync.create();
 
-const handleError = function(err) {
-    console.log(err);
-    this.emit('end');
-}
-const clean = () => {
-    return new Promise( resolve => {
-        del.sync( PATH.DIR.DIST);
-        resolve() ; 
-    }) ;
-}
+gulp.task('clean', async () => {
+    del.sync( PATH.DIR.DIST);
+})
 
-gulp.task('sass', () => {
+gulp.task('sass', async () => {
     const option = {
         outputStyle : "expanded",
         indentType : "tab",
@@ -34,28 +28,33 @@ gulp.task('sass', () => {
         precision: 3,
         sourceComments: false
     };
-	return new Promise( resolve => {
-		gulp.src(PATH.SRC.css)
-        .pipe( cache.filter() )
-        .pipe( sass(option) ).on('error', handleError)
-        .pipe( cache.cache() ) 
-        .pipe( gulp.dest(PATH.DIST.css))
-		resolve();
-	})
+	await gulp.src(PATH.SRC.css)
+    .pipe( cache.filter() )
+    .pipe( plumber({ errorHandler: notify.onError("SCSS Compile error <%= error.message %>") }))
+    .pipe( sass(option) )
+    .pipe( cache.cache() ) 
+    .pipe( gulp.dest(PATH.DIST.css))
 })
 
 gulp.task('watch', () => {
+    gulp.watch(PATH.SRC.index,  gulp.series('index'))
     gulp.watch(PATH.SRC.js,  gulp.series('js'))
     gulp.watch(PATH.SRC.lib,  gulp.series('lib'))
 	gulp.watch(PATH.SRC.css,  gulp.series('sass'))
-    gulp.watch(PATH.SRC.html,  gulp.series('html'))
+    gulp.watch(PATH.SRC.ejs,  gulp.series('ejs'))
+    gulp.watch(PATH.SRC.assets,  gulp.series('assets'))
 });
+
+gulp.task('assets' , async () => {
+    await gulp.src(PATH.SRC.assets)
+    .pipe(gulp.dest(PATH.DIST.assets))
+    .pipe(reload.reload({ stream : true }));
+})
 
 gulp.task('js',async () => {
     await gulp.src(PATH.SRC.js)
     .pipe(babel())
     .pipe(minify())
-	//.pipe(strip())
 	.pipe(concat('index.js'))
     .pipe(gulp.dest(PATH.DIST.js))
     .pipe(reload.reload({ stream : true }));
@@ -63,21 +62,33 @@ gulp.task('js',async () => {
 
 gulp.task('lib',async () => {
     await gulp.src(PATH.SRC.lib)
-	.pipe(concat('lib.js'))
+    .pipe(concat('lib.js'))
     .pipe(gulp.dest(PATH.DIST.lib))
     .pipe(reload.reload({ stream : true }));
 })
 
 
-gulp.task('html', async () => {
-    await gulp.src(PATH.SRC.html)
+gulp.task('index', async () => {
+    await gulp.src(PATH.SRC.index)
+    .pipe(plumber({ errorHandler: notify.onError("ejs Compile Error : <%= error.message %>")}))
+    .pipe(ejs())
+    .pipe(rename({extname:'.html'}))
+    .pipe(gulp.dest(PATH.DIST.index))
+    .pipe(reload.reload({ stream : true }));
+});
+
+gulp.task('ejs', async () => {
+    await gulp.src(PATH.SRC.ejs)
+    .pipe(plumber({ errorHandler: notify.onError("ejs Compile Error : <%= error.message %>") }) )
+    .pipe(ejs())
+    .pipe(rename({extname:'.html'}))
     .pipe(gulp.dest(PATH.DIST.html))
     .pipe(reload.reload({ stream : true }));
 });
 
-gulp.task('browserSync', () =>{
-    return reload.init({
-        startPath : 'views',
+gulp.task('browserSync', async () =>{
+    return await reload.init({
+        startPath : '/index.html',
         port : PATH.DIR.port,
         watch: true,
         server: { baseDir: 'dist/' }

@@ -1,6 +1,6 @@
 @import './reset.css';
 
-.align{
+main{
     height:100%;
     padding:100px;
 }
@@ -12,4 +12,12 @@ h1{
 p{
     width:100%;
     font-size:20px;
+    margin-bottom:10px;
+}
+img{
+    width:100px;
+}
+
+.test{
+    padding:100px;
 }

@@ -1,1 +1,1 @@
-"use strict";var titleWrap=document.querySelector("#title"),msgWrap=document.querySelector("#msg"),title=function(){return"Hi there!"},msg=function(){return"Hope you happy hacking with this package."};window.onload=function(){titleWrap.innerHTML=title(),msgWrap.innerHTML=msg()};
+"use strict";var titleWrap=document.querySelector("#title"),msgWrap=document.querySelector("#msg"),title=function(){return"Hi there!!"},msg=function(){return"Hope you happy hacking with this package."};window.onload=function(){titleWrap.innerHTML=title(),msgWrap.innerHTML=msg()};
