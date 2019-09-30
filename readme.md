@@ -36,7 +36,7 @@ npm install
 ```
 - ⚠️ html과 ejs의 파일명이 같지 않게 주의해주세요!
 
-### 4. `npm run gaeng` 혹은 `gulp` 명령어로 로컬서버를 실행합니다.
+### 4. `npm run gaeng` 혹은 `gulp` 명령어로 로컬서버를 실행합니다. 
 
 ```
 //NPM
