@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "gaeng": "gulp",
-    "bundle:js" : "gulp bundle-js"
+    "bundle:js": "gulp bundle-js"
   },
   "keywords": [
     "static page",

@@ -8,7 +8,10 @@ export const PATH = {
     DIR : dir,
     SRC : {
         js : `${dir.src}/js/**/*.js`,
-        css : `${dir.src}/styles/**/*.scss`,
+        scss : `${dir.src}/styles/**/*.scss`,
+        sass : `${dir.src}/styles/**/*.sass`,
+        css : `${dir.src}/styles/**/*.css`,
+        ignoreCss : `!${dir.src}/styles/**/*.css`,
         html : `${dir.src}/**/*.html`,
         ejs : `${dir.src}/**/*.ejs`,
         ignoreInc : `!src/inc/*.ejs`,

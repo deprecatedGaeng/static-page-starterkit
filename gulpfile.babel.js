@@ -24,11 +24,11 @@ gulp.task('sass', async () => {
         precision: 3,
         sourceComments: false
     };
-	await gulp.src(PATH.SRC.css)
+	await gulp.src([PATH.SRC.scss,PATH.SRC.sass,PATH.SRC.css])
     .pipe( cache.filter() )
     .pipe( plumber({ errorHandler: notify.onError("SCSS Compile error <%= error.message %>") }))
     .pipe( sass(option) )
-    .pipe( cache.cache() ) 
+    .pipe( cache.cache() )
     .pipe( gulp.dest(PATH.DIST.css))
 })
 
