@@ -4,7 +4,8 @@
   "description": "정적페이지 Starter kit",
   "main": "index.js",
   "scripts": {
-    "gaeng": "gulp"
+    "gaeng": "gulp",
+    "bundle:js" : "gulp bundle-js"
   },
   "keywords": [
     "static page",

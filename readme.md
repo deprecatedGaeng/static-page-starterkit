@@ -52,7 +52,7 @@ gulp
 
 ### 5. 빌드 명령어는 따로 없습니다. 작업 후 `dist` 폴더의 파일들을 배포에 사용해주세요.
 
-### 6. 빌드 전 js 파일의 단일js파일을 위한 압축(bundling)을 원하시는 분은 `npm run compress:js` or `yarn compress:js`을 사용해주세요.
+### 6. 빌드 전 js 파일의 단일js파일을 위한 압축(bundling)을 원하시는 분은 `npm run bundle:js` or `yarn bundle:js`을 사용해주세요.
 - `bundle.js`의 이름으로 압축됩니다.
 - 압축 후 footer에 추가하는것을 권장합니다.
 
