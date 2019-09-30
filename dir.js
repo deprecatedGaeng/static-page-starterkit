@@ -7,19 +7,18 @@ const dir = {
 export const PATH = {
     DIR : dir,
     SRC : {
-        index : `${dir.src}/index.ejs`,
         js : `${dir.src}/js/**/*.js`,
         css : `${dir.src}/styles/**/*.scss`,
-        html : `${dir.src}/views/**/*.html`,
-        ejs : `${dir.src}/views/**/*.ejs`,
+        html : `${dir.src}/**/*.html`,
+        ejs : `${dir.src}/**/*.ejs`,
+        ignoreInc : `!src/inc/*.ejs`,
         lib : `${dir.src}/lib/**/*.js`,
         assets : `${dir.src}/assets/**`
     },
     DIST : {
-        index : dir.dist,
         js : `${dir.dist}/js`,
         css : `${dir.dist}/styles`,
-        html : `${dir.dist}/views/`,
+        html : dir.dist,
         lib : `${dir.dist}/lib/`,
         assets : `${dir.dist}/assets`
     },

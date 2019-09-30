@@ -1,7 +1,4 @@
-# 🛠 STATIC PAGE STARTER KIT Ver.1.1.0
-
-
-닭잡는데 소잡는칼을 쓸 수 없어서 만들었습니다.(React,Vue 등등..)
+# 🛠 STATIC PAGE STARTER KIT Ver.1.2.0
 
 정적 페이지를 빨리 구축하기 위한 스타터킷입니다.
 
@@ -24,21 +21,22 @@ npm install
 
 
 ### 2. Folder structure (📁src)
-- views : `ejs` 확장자를 사용합니다.
-    - html include를 사용할 수 있습니다.
-    - `a`태그 사용시 링크에는 `.html` 확장자를 사용합니다.
-    ```
-        ❌ <a href="./test.ejs">
-        ⭕️ <a href="./test.html">
-    ```
 - styles : `scss`를 사용할 수 있습니다. sass,scss를 사용하지 않으시면 확장자만 scss로 사용해주세요.
 - js : js파일을 생성해주세요. es6문법 사용가능합니다.
 - inc : include로 사용할 html 컴포넌트를 생성하여 사용합니다. `ejs` 확장자를 사용합니다.
 - lib : 외부 라이브러리 js 파일
 - assets : 이미지,동영상 등등
 
+### 3. ejs
+- html include를 사용할 수 있습니다.
+- `a`태그 사용시 링크에는 `.html` 확장자를 사용합니다.
+```
+    ❌ <a href="./test.ejs">
+    ⭕️ <a href="./test.html">
+```
+- ⚠️ html과 ejs의 파일명이 같지 않게 주의해주세요!
 
-### 3. `npm run gaeng` 혹은 `gulp` 명령어로 로컬서버를 실행합니다.
+### 4. `npm run gaeng` 혹은 `gulp` 명령어로 로컬서버를 실행합니다.
 
 ```
 //NPM
@@ -52,8 +50,11 @@ gulp
 ```
 
 
-### 4. 빌드 명령어는 따로 없습니다. 작업 후 `dist` 폴더의 파일들을 배포에 사용해주세요.
+### 5. 빌드 명령어는 따로 없습니다. 작업 후 `dist` 폴더의 파일들을 배포에 사용해주세요.
 
+### 6. 빌드 전 js 파일의 단일js파일을 위한 압축(bundling)을 원하시는 분은 `npm run compress:js` or `yarn compress:js`을 사용해주세요.
+- `bundle.js`의 이름으로 압축됩니다.
+- 압축 후 footer에 추가하는것을 권장합니다.
 
 ## HISTORY
 
@@ -62,5 +63,8 @@ gulp
 | 2019-07-19 | 최초 배포 | Ver 1.0.0 |
 | 2019-07-24 | 1. ejs 추가| Ver 1.1.0 |
 |            | 2. ejs,scss 컴파일 에러시 notify 추가|    |
+| 2019-09-30 | 1 .프로젝트 root 이하 모든 폴더에서 ejs 사용가능| Ver 1.2.0    |
+|            | 2 .inc 폴더 수정시 자동 반영 |    |
+|            | 3 .`src/assets` 수정 시 `dist/assets` Sync 에러 수정|    |
 
 **Copyright 2019 . Kyeonggeun Cho All rights reserved**
