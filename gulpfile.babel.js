@@ -15,19 +15,26 @@ import 'babel-polyfill'
 
 const cache = new Cache();
 const reload = browserSync.create();
+const sassOption = {
+    outputStyle : "expanded",
+    indentType : "tab",
+    indentWidth : 1,
+    precision: 3,
+    sourceComments: false
+};
+gulp.task('reload', async () => {
+	await reload.reload({ stream : true })
+})
+gulp.task('css', async () => {
+	await gulp.src(PATH.SRC.css)
+    .pipe( gulp.dest(PATH.DIST.css))
+})
 
 gulp.task('sass', async () => {
-    const option = {
-        outputStyle : "expanded",
-        indentType : "tab",
-        indentWidth : 1,
-        precision: 3,
-        sourceComments: false
-    };
-	await gulp.src([PATH.SRC.scss,PATH.SRC.sass,PATH.SRC.css])
+	await gulp.src([PATH.SRC.scss,PATH.SRC.sass])
     .pipe( cache.filter() )
     .pipe( plumber({ errorHandler: notify.onError("SCSS Compile error <%= error.message %>") }))
-    .pipe( sass(option) )
+    .pipe( sass(sassOption) )
     .pipe( cache.cache() )
     .pipe( gulp.dest(PATH.DIST.css))
 })
@@ -38,33 +45,33 @@ gulp.task('cleanAssets', async () => {
 
 gulp.task('assets' , async () => {
     await gulp.src(PATH.SRC.assets)
-    .pipe(gulp.dest(PATH.DIST.assets))
-    .pipe(reload.reload({ stream : true }));
+    .pipe(gulp.dest(PATH.DIST.assets));
 })
 
 gulp.task('js',async () => {
     await gulp.src(PATH.SRC.js)
     .pipe(babel())
     .pipe(minify())
-    .pipe(gulp.dest(PATH.DIST.js))
-    .pipe(reload.reload({ stream : true }));
+    .pipe(gulp.dest(PATH.DIST.js));
 })
 
 gulp.task('bundle-js',async () => {
-    //await del.sync(PATH.DIST.js+'/*.js')
     await gulp.src(PATH.SRC.js)
     .pipe(babel())
     .pipe(minify())
 	.pipe(concat('bundle.js'))
-    .pipe(gulp.dest(PATH.DIST.js))
-    .pipe(reload.reload({ stream : true }));
+    .pipe(gulp.dest(PATH.DIST.js));
+})
+
+gulp.task('bundle-lib',async () => {
+    await gulp.src(PATH.SRC.lib)
+    .pipe(concat('lib.bundle.js'))
+    .pipe(gulp.dest(PATH.DIST.lib));
 })
 
 gulp.task('lib',async () => {
     await gulp.src(PATH.SRC.lib)
-    .pipe(concat('lib.js'))
-    .pipe(gulp.dest(PATH.DIST.lib))
-    .pipe(reload.reload({ stream : true }));
+    .pipe(gulp.dest(PATH.DIST.lib));
 })
 
 gulp.task('ejs', async () => {
@@ -72,15 +79,13 @@ gulp.task('ejs', async () => {
     .pipe(plumber({ errorHandler: notify.onError("ejs Compile Error : <%= error.message %>") }) )
     .pipe(ejs())
     .pipe(rename({extname:'.html'}))
-    .pipe(gulp.dest(PATH.DIST.html))
-    .pipe(reload.reload({ stream : true }));
+    .pipe(gulp.dest(PATH.DIST.html));
 });
 
 
 gulp.task('html', async () => {
     await gulp.src(PATH.SRC.html)
-    .pipe(gulp.dest(PATH.DIST.html))
-    .pipe(reload.reload({ stream : true }));
+    .pipe(gulp.dest(PATH.DIST.html));
 });
 
 gulp.task('browserSync', async () =>{
@@ -92,13 +97,19 @@ gulp.task('browserSync', async () =>{
     });
 });
 
+gulp.task('build', async () => {
+    await del.sync('dist'+'/**');
+    await gulp.series('js','css','sass','html','ejs','lib','assets')()
+});
+
 gulp.task('watch', () => {
-    gulp.watch(PATH.SRC.js,  gulp.series('js'))
-    gulp.watch(PATH.SRC.lib,  gulp.series('lib'))
-	gulp.watch(PATH.SRC.css,  gulp.series('sass'))
-    gulp.watch(PATH.SRC.ejs,  gulp.series('ejs'))
-    gulp.watch(PATH.SRC.html,  gulp.series('html'))
-    gulp.watch(PATH.SRC.assets,  gulp.series('cleanAssets','assets'))
+    gulp.watch(PATH.SRC.js,  gulp.series('js','reload'))
+    gulp.watch(PATH.SRC.lib,  gulp.series('lib','reload'))
+	gulp.watch([PATH.SRC.scss,PATH.SRC.sass],  gulp.series('sass','reload'))
+	gulp.watch(PATH.SRC.css,  gulp.series('css','reload'))
+    gulp.watch(PATH.SRC.ejs,  gulp.series('ejs','reload'))
+    gulp.watch(PATH.SRC.html,  gulp.series('html','reload'))
+    gulp.watch(PATH.SRC.assets,  gulp.series('cleanAssets','assets','reload'))
 });
 
 

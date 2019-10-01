@@ -1,11 +1,13 @@
 {
   "name": "static-page-starterkit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "정적페이지 Starter kit",
   "main": "index.js",
   "scripts": {
     "gaeng": "gulp",
-    "bundle:js": "gulp bundle-js"
+    "bundle:js": "gulp bundle-js",
+    "bundle:lib": "gulp bundle-lib",
+    "build": "gulp build"
   },
   "keywords": [
     "static page",
