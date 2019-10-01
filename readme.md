@@ -68,7 +68,7 @@ gulp
 | 2019-09-30 | 1 .프로젝트 root 이하 모든 폴더에서 ejs 사용가능| Ver 1.2.0    |
 |            | 2 .inc 폴더 수정시 자동 반영 |    |
 |            | 3 .`src/assets` 수정 시 `dist/assets` Sync 에러 수정|    |
-|            | 4 .stylessheet `css`,`sass` 사용가능|    |
-| 2019-10-01 | 1. build 추가 |   Ver 1.2.1   |
+|            | 4 .stylesheet `css`,`sass` 사용가능|    |
+| 2019-10-01 | build 추가 |   Ver 1.2.1   |
 
 **Copyright 2019 . Kyeonggeun Cho All rights reserved**
