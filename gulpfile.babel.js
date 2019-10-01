@@ -98,7 +98,7 @@ gulp.task('browserSync', async () =>{
 });
 
 gulp.task('build', async () => {
-    await del.sync('dist'+'/**');
+    await del.sync('dist'+'/**/*');
     await gulp.series('js','css','sass','html','ejs','lib','assets')()
 });
 
