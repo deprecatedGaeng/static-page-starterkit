@@ -50,6 +50,7 @@ gulp.task('assets' , async () => {
 
 gulp.task('js',async () => {
     await gulp.src(PATH.SRC.js)
+    .pipe(plumber({ errorHandler: notify.onError("JS Compile Error : <%= error.message %>") }) )
     .pipe(babel())
     .pipe(minify())
     .pipe(gulp.dest(PATH.DIST.js));
@@ -57,6 +58,7 @@ gulp.task('js',async () => {
 
 gulp.task('bundle-js',async () => {
     await gulp.src(PATH.SRC.js)
+    .pipe(plumber({ errorHandler: notify.onError("JS Compile Error : <%= error.message %>") }) )
     .pipe(babel())
     .pipe(minify())
 	.pipe(concat('bundle.js'))
@@ -65,6 +67,7 @@ gulp.task('bundle-js',async () => {
 
 gulp.task('bundle-lib',async () => {
     await gulp.src(PATH.SRC.lib)
+    .pipe(plumber({ errorHandler: notify.onError("JS Compile Error : <%= error.message %>") }) )
     .pipe(concat('lib.bundle.js'))
     .pipe(gulp.dest(PATH.DIST.lib));
 })
