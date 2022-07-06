@@ -2,7 +2,6 @@ import gulp from 'gulp';
 import {PATH} from './dir';
 import del from 'del' ; 
 import minify from 'gulp-uglify';
-import sass from 'gulp-sass';
 import Cache from 'gulp-file-cache';
 import babel from 'gulp-babel';
 import concat from 'gulp-concat';
@@ -13,6 +12,8 @@ import plumber from 'gulp-plumber';
 import notify from 'gulp-notify';
 import 'babel-polyfill'
 
+
+const sass = require('gulp-sass')(require('sass'));
 const cache = new Cache();
 const reload = browserSync.create();
 const sassOption = {

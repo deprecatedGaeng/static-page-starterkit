@@ -1,4 +1,4 @@
-# 🛠 STATIC PAGE STARTER KIT Ver.1.2.2
+# 🛠 STATIC PAGE STARTER KIT Ver.1.3.0
 
 정적 페이지를 빨리 구축하기 위한 스타터킷입니다.
 
@@ -74,5 +74,6 @@ gulp
 |            | 4 .stylesheet `css`,`sass` 사용가능                  |           |
 | 2019-10-01 | build 추가                                           | Ver 1.2.1 |
 | 2020-03-24 | JS 컴파일 에러 처리                                  | Ver 1.2.2 |
+| 2022-07-06 | 의존성 업데이트                                      | Ver 1.3.0 |
 
-**Copyright 2019 . Kyeonggeun Cho All rights reserved**
+**Copyright 2022 . Kyeonggeun Cho All rights reserved**
